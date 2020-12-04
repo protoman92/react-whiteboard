@@ -1,18 +1,16 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "sourceMap": true,
-    "noImplicitAny": true,
-    "module": "es6",
-    "target": "es5",
-    "jsx": "react",
-    "moduleResolution": "node",
-    "rootDirs": ["src", "stories"],
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "src",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "declaration": true,
+    "jsx": "react",
+    "module": "es6",
+    "moduleResolution": "node",
+    "noImplicitAny": true,
+    "outDir": "./dist/",
+    "rootDirs": ["src", "stories"],
+    "sourceMap": true,
+    "target": "es5"
   },
-  "include": [
-    "./src/**/*"
-  ]
+  "include": ["./src/**/*"]
 }
