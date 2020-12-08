@@ -6,20 +6,9 @@
   "dependencies": {},
   "description": "A whiteboard React component using SVG",
   "devDependencies": {
-    "@types/jest": "*",
-    "@types/node": "^12.11.2",
-    "@types/react": "*",
-    "@types/react-dom": "*",
-    "jest": "*",
-    "npm-run-all": "^4.1.5",
     "react": "*",
     "react-dom": "*",
-    "rimraf": "^3.0.0",
-    "ts-jest": "*",
-    "ts-loader": "*",
-    "typescript": "*",
-    "webpack": "^4.37.0",
-    "webpack-cli": "^3.3.4"
+    "typescript": "*"
   },
   "files": [
     "dist"
@@ -34,7 +23,6 @@
   "main": "dist/index.js",
   "name": "@ohtomi/react-whiteboard",
   "peerDependencies": {
-    "jest": "24.9.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
   },
@@ -43,22 +31,7 @@
     "url": "https://github.com/ohtomi/react-whiteboard.git"
   },
   "resolutions": {
-    "@types/jest": "24.9.0",
-    "@types/react": "16.9.8",
-    "@types/react-dom": "16.9.8",
-    "ts-jest": "26.3.0",
-    "ts-loader": "7.0.4",
     "typescript": "4.1.2"
-  },
-  "scripts": {
-    "build": "run-s compile test",
-    "clear": "rimraf dist coverage",
-    "compile": "webpack --progress --profile",
-    "start": "run-s storybook",
-    "test": "jest --coverage",
-    "watch": "run-p watch:*",
-    "watch:src": "webpack --watch",
-    "watch:test": "jest --watch --onlyChanged --notify --notifyMode failure"
   },
   "version": "0.1.2"
 }
