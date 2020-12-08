@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { SvgElementEnum } from "./Constants";
 
 export type PointData = {
