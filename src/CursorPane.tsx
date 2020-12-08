@@ -35,34 +35,22 @@ export class CursorPane extends React.Component<Props, State> {
     };
   }
 
-  onClickCursorLayer(ev: React.MouseEvent<HTMLDivElement>) {
-    let eventToPoint = (
-      ev: React.MouseEvent<HTMLDivElement>
-    ): Array<number> => {
-      const x = ev.nativeEvent.offsetX - 2;
-      const y = ev.nativeEvent.offsetY + 2 * (this.props.strokeWidth / 3);
-      return [x, y];
-    };
-
+  private onMouseDownCursorLayer = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (this.props.mode === ModeEnum.HAND) {
-      const [x, y] = eventToPoint(ev);
+      const [x, y] = this.eventToPoint(ev);
       this.props.events.startDrawing(x, y);
-    } else {
+    }
+  };
+
+  private onMouseUpCursorLayer = () => {
+    if (this.props.mode !== ModeEnum.HAND) {
       this.props.events.stopDrawing();
     }
-  }
+  };
 
-  onMouseMoveCursorLayer(ev: React.MouseEvent<HTMLDivElement>) {
-    let eventToPoint = (
-      ev: React.MouseEvent<HTMLDivElement>
-    ): Array<number> => {
-      const x = ev.nativeEvent.offsetX - 2;
-      const y = ev.nativeEvent.offsetY + 2 * (this.props.strokeWidth / 3);
-      return [x, y];
-    };
-
+  private onMouseMoveCursorLayer = (ev: React.MouseEvent<HTMLDivElement>) => {
     if (this.props.mode === ModeEnum.DRAW_LINE) {
-      const [x, y] = eventToPoint(ev);
+      const [x, y] = this.eventToPoint(ev);
       this.props.events.pushPoint(x, y);
     } else if (this.props.mode === ModeEnum.DRAG_IMAGE) {
       if (ev.target !== this.dragHandle) {
@@ -138,7 +126,7 @@ export class CursorPane extends React.Component<Props, State> {
         this.props.events.resizeImage(moveX, moveY);
       }
     }
-  }
+  };
 
   onClickDragHandle(ev: React.MouseEvent<HTMLDivElement>) {
     if (this.props.mode === ModeEnum.HAND) {
@@ -169,6 +157,14 @@ export class CursorPane extends React.Component<Props, State> {
     ev.stopPropagation();
   }
 
+  private eventToPoint = (
+    ev: React.MouseEvent<HTMLDivElement>
+  ): Array<number> => {
+    const x = ev.nativeEvent.offsetX - 2;
+    const y = ev.nativeEvent.offsetY + 2 * (this.props.strokeWidth / 3);
+    return [x, y];
+  };
+
   render() {
     const cursorLayerStyle = {
       position: "absolute" as "absolute",
@@ -183,8 +179,9 @@ export class CursorPane extends React.Component<Props, State> {
       <div
         role="presentation"
         style={cursorLayerStyle}
-        onClick={this.onClickCursorLayer.bind(this)}
-        onMouseMove={this.onMouseMoveCursorLayer.bind(this)}
+        onMouseDown={this.onMouseDownCursorLayer}
+        onMouseMove={this.onMouseMoveCursorLayer}
+        onMouseUp={this.onMouseUpCursorLayer}
       >
         {this.renderImageHandle()}
       </div>
