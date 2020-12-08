@@ -6,7 +6,6 @@
   "dependencies": {},
   "description": "A whiteboard React component using SVG",
   "devDependencies": {
-    "@storybook/react": "^5.1.8",
     "@types/jest": "*",
     "@types/node": "^12.11.2",
     "@types/react": "*",
@@ -56,7 +55,6 @@
     "clear": "rimraf dist coverage",
     "compile": "webpack --progress --profile",
     "start": "run-s storybook",
-    "storybook": "start-storybook -p 9080",
     "test": "jest --coverage",
     "watch": "run-p watch:*",
     "watch:src": "webpack --watch",

@@ -1,83 +1,92 @@
-import {ImageData} from './EventStore'
-
+import { ImageData } from "./EventStore";
 
 export class SvgConverter {
+  static toSvgData(sourceNode: SVGSVGElement): Promise<string> {
+    let htmlText = sourceNode.outerHTML;
+    let base64EncodedText = window.btoa(
+      window
+        .encodeURIComponent(htmlText)
+        .replace(/%([0-9A-F]{2})/g, (match: string, p1: string): string =>
+          String.fromCharCode(window.parseInt("0x" + p1))
+        )
+    );
 
-    static toSvgData(sourceNode: SVGSVGElement): Promise<string> {
-        let htmlText = sourceNode.outerHTML
-        let base64EncodedText = window.btoa(
-            window.encodeURIComponent(htmlText)
-                .replace(/%([0-9A-F]{2})/g, (match: string, p1: string): string => String.fromCharCode(window.parseInt('0x' + p1))))
+    return new Promise((resolve) => {
+      resolve("data:image/svg+xml;charset=utf-8;base64," + base64EncodedText);
+    });
+  }
 
-        return new Promise(resolve => {
-            resolve('data:image/svg+xml;charset=utf-8;base64,' + base64EncodedText)
-        })
-    }
+  static toPngData(sourceNode: SVGSVGElement): Promise<string> {
+    return SvgConverter.toDataUrl(sourceNode, "image/png");
+  }
 
-    static toPngData(sourceNode: SVGSVGElement): Promise<string> {
-        return SvgConverter.toDataUrl(sourceNode, 'image/png')
-    }
+  static toJpegData(sourceNode: SVGSVGElement): Promise<string> {
+    return SvgConverter.toDataUrl(sourceNode, "image/jpeg");
+  }
 
-    static toJpegData(sourceNode: SVGSVGElement): Promise<string> {
-        return SvgConverter.toDataUrl(sourceNode, 'image/jpeg')
-    }
+  static toDataUrl(
+    sourceNode: SVGSVGElement,
+    imageType: string
+  ): Promise<string> {
+    return new Promise((resolve) => {
+      SvgConverter.toSvgData(sourceNode).then((svgdata: string) => {
+        let { width, height } = sourceNode.getBoundingClientRect();
 
-    static toDataUrl(sourceNode: SVGSVGElement, imageType: string): Promise<string> {
-        return new Promise(resolve => {
-            SvgConverter.toSvgData(sourceNode).then((svgdata: string) => {
-                let {width, height} = sourceNode.getBoundingClientRect()
+        let imageNode = new window.Image();
+        imageNode.onload = () => {
+          let canvasNode = document.createElement("canvas");
+          canvasNode.width = width;
+          canvasNode.height = height;
 
-                let imageNode = new window.Image()
-                imageNode.onload = () => {
-                    let canvasNode = document.createElement('canvas')
-                    canvasNode.width = width
-                    canvasNode.height = height
+          let graphicsContext = canvasNode.getContext("2d");
+          if (graphicsContext) {
+            graphicsContext.drawImage(imageNode, 0, 0);
+          } else {
+            throw new Error("got no rendering context");
+          }
 
-                    let graphicsContext = canvasNode.getContext('2d')
-                    if (graphicsContext) {
-                        graphicsContext.drawImage(imageNode, 0, 0)
-                    } else {
-                        throw new Error('got no rendering context')
-                    }
+          resolve(canvasNode.toDataURL(imageType));
+        };
+        imageNode.src = svgdata;
+      });
+    });
+  }
 
-                    resolve(canvasNode.toDataURL(imageType))
-                }
-                imageNode.src = svgdata
-            })
-        })
-    }
+  static fromPngImage(imageUrl: string): Promise<ImageData> {
+    return SvgConverter.fromImageUrl(imageUrl, "image/png");
+  }
 
-    static fromPngImage(imageUrl: string): Promise<ImageData> {
-        return SvgConverter.fromImageUrl(imageUrl, 'image/png')
-    }
+  static fromJpegImage(imageUrl: string): Promise<ImageData> {
+    return SvgConverter.fromImageUrl(imageUrl, "image/jpeg");
+  }
 
-    static fromJpegImage(imageUrl: string): Promise<ImageData> {
-        return SvgConverter.fromImageUrl(imageUrl, 'image/jpeg')
-    }
+  static fromGifImage(imageUrl: string): Promise<ImageData> {
+    return SvgConverter.fromImageUrl(imageUrl, "image/gif");
+  }
 
-    static fromGifImage(imageUrl: string): Promise<ImageData> {
-        return SvgConverter.fromImageUrl(imageUrl, 'image/gif')
-    }
+  static fromImageUrl(imageUrl: string, imageType: string): Promise<ImageData> {
+    return new Promise((resolve) => {
+      let imageNode = new window.Image();
+      imageNode.onload = () => {
+        let canvasNode = document.createElement("canvas");
+        canvasNode.width = imageNode.width;
+        canvasNode.height = imageNode.height;
 
-    static fromImageUrl(imageUrl: string, imageType: string): Promise<ImageData> {
-        return new Promise(resolve => {
-            let imageNode = new window.Image()
-            imageNode.onload = () => {
-                let canvasNode = document.createElement('canvas')
-                canvasNode.width = imageNode.width
-                canvasNode.height = imageNode.height
+        let graphicsContext = canvasNode.getContext("2d");
+        if (graphicsContext) {
+          graphicsContext.drawImage(imageNode, 0, 0);
+        } else {
+          throw new Error("got no rendering context");
+        }
 
-                let graphicsContext = canvasNode.getContext('2d')
-                if (graphicsContext) {
-                    graphicsContext.drawImage(imageNode, 0, 0)
-                } else {
-                    throw new Error('got no rendering context')
-                }
-
-                resolve({width: imageNode.width, height: imageNode.height, dataUrl: canvasNode.toDataURL(imageType)})
-            }
-            imageNode.crossOrigin = 'anonymous'
-            imageNode.src = imageUrl
-        })
-    }
+        resolve({
+          width: imageNode.width,
+          height: imageNode.height,
+          dataUrl: canvasNode.toDataURL(imageType),
+        });
+      };
+      imageNode.crossOrigin = "anonymous";
+      imageNode.src = imageUrl;
+    });
+  }
 }

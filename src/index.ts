@@ -1,20 +1,27 @@
-import {ModeEnum, SvgElementEnum} from './Constants'
+import { ModeEnum, SvgElementEnum } from "./Constants";
 
-export {Whiteboard} from './Whiteboard'
-export {ChangeStrokeColor, ChangeStrokeWidth, EventListener, EventNameEnum, EventStream, EventStreamProtocol} from './EventStream'
+export { Whiteboard } from "./Whiteboard";
 export {
-    EventStore,
-    EventStoreProtocol,
-    ImageData,
-    ImageEvent,
-    isPointEvent,
-    isImageEvent,
-    isReducedImageEvent,
-    isReducedLineEvent,
-    MouseMoveData,
-    PointData,
-    PointEvent,
-    StopEvent
-} from './EventStore'
-export {SvgConverter} from './SvgConverter'
-export {ModeEnum, SvgElementEnum}
+  ChangeStrokeColor,
+  ChangeStrokeWidth,
+  EventListener,
+  EventNameEnum,
+  EventStream,
+  EventStreamProtocol,
+} from "./EventStream";
+export {
+  EventStore,
+  EventStoreProtocol,
+  ImageData,
+  ImageEvent,
+  isPointEvent,
+  isImageEvent,
+  isReducedImageEvent,
+  isReducedLineEvent,
+  MouseMoveData,
+  PointData,
+  PointEvent,
+  StopEvent,
+} from "./EventStore";
+export { SvgConverter } from "./SvgConverter";
+export { ModeEnum, SvgElementEnum };
