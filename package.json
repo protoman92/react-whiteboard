@@ -1,25 +1,55 @@
 {
-  "name": "@ohtomi/react-whiteboard",
-  "version": "0.1.2",
+  "author": "Kenichi Ohtomi",
+  "bugs": {
+    "url": "https://github.com/ohtomi/react-whiteboard/issues"
+  },
+  "dependencies": {},
   "description": "A whiteboard React component using SVG",
+  "devDependencies": {
+    "@storybook/react": "^5.1.8",
+    "@types/jest": "*",
+    "@types/node": "^12.11.2",
+    "@types/react": "*",
+    "@types/react-dom": "*",
+    "jest": "*",
+    "npm-run-all": "^4.1.5",
+    "react": "*",
+    "react-dom": "*",
+    "rimraf": "^3.0.0",
+    "ts-jest": "*",
+    "ts-loader": "*",
+    "typescript": "*",
+    "webpack": "^4.37.0",
+    "webpack-cli": "^3.3.4"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/ohtomi/react-whiteboard",
   "keywords": [
     "react",
     "svg",
     "whiteboard"
   ],
-  "homepage": "https://github.com/ohtomi/react-whiteboard",
-  "bugs": {
-    "url": "https://github.com/ohtomi/react-whiteboard/issues"
-  },
   "license": "MIT",
-  "author": "Kenichi Ohtomi",
-  "files": [
-    "dist"
-  ],
   "main": "dist/index.js",
+  "name": "@ohtomi/react-whiteboard",
+  "peerDependencies": {
+    "jest": "24.9.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/ohtomi/react-whiteboard.git"
+  },
+  "resolutions": {
+    "@types/jest": "24.9.0",
+    "@types/react": "16.9.8",
+    "@types/react-dom": "16.9.8",
+    "ts-jest": "26.3.0",
+    "ts-loader": "7.0.4",
+    "typescript": "4.1.2"
   },
   "scripts": {
     "build": "run-s compile test",
@@ -32,26 +62,5 @@
     "watch:src": "webpack --watch",
     "watch:test": "jest --watch --onlyChanged --notify --notifyMode failure"
   },
-  "dependencies": {},
-  "devDependencies": {
-    "@storybook/react": "^5.1.8",
-    "@types/jest": "^24.0.18",
-    "@types/node": "^12.11.2",
-    "@types/react": "^16.9.2",
-    "@types/react-dom": "^16.9.0",
-    "jest": "^24.9.0",
-    "npm-run-all": "^4.1.5",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "rimraf": "^3.0.0",
-    "ts-jest": "^24.1.0",
-    "ts-loader": "^6.1.0",
-    "typescript": "4.1.2",
-    "webpack": "^4.37.0",
-    "webpack-cli": "^3.3.4"
-  },
-  "peerDependencies": {
-    "react": "^16.8.5",
-    "react-dom": "^16.8.5"
-  }
+  "version": "0.1.2"
 }
