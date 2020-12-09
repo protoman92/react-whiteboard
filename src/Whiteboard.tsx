@@ -13,6 +13,7 @@ import { CursorPane } from "./CursorPane";
 import { CanvasPane } from "./CanvasPane";
 
 type Props = {
+  defaultProperties?: Pick<State, "strokeColor" | "strokeWidth">;
   events: EventStream;
   eventStore: EventStore;
   width: number;
@@ -54,6 +55,7 @@ export class Whiteboard extends React.Component<Props, State> {
       layer: 0,
       strokeWidth: 5,
       strokeColor: "black",
+      ...props.defaultProperties,
     };
 
     this.canvas = null;
